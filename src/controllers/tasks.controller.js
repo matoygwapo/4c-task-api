@@ -62,3 +62,27 @@ exports.deleteTask = async (req, res) => {
         }) 
     }
 }
+
+exports.updateTask = async (req, res) => {
+    try{
+        const update = await Task.findByIdAndUpdate(
+            req.params.task_id,
+            req.body,
+            {
+                new:true,
+                runValidators:true
+            }
+        )
+
+        res.status(200).json({
+            message: `Task has been updated`,
+            data: update
+        })  
+
+    }catch(error){
+        console.log(error)
+        res.status(400).json({
+         message:error.message
+        }) 
+    }
+}
